@@ -1,4 +1,4 @@
-package io.fate7.betterreadsdataloader.book;
+package io.javabrains.book;
 
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;

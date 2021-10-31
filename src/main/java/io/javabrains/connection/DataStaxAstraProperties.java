@@ -1,4 +1,4 @@
-package io.fate7.betterreadsdataloader.connection;
+package io.javabrains.connection;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
