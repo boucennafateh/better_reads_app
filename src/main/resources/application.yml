@@ -6,3 +6,29 @@ spring:
           github:
             client-id:
             client-secret:
+
+spring:
+  data:
+    cassandra:
+      keyspace-name: main
+      username: 
+      password:
+      schema-action: recreate
+      request:
+        timeout: 10s
+      connection:
+        connection-timeout: 10s
+        init-query-timeout: 10s
+
+datastax.astra:
+  secure-connect-bundle: secure-connect.zip
+
+astra.db:
+  id: 38333067-942a-46a7-978e-894613d9e4a7-1
+  region: westeurope
+  keyspace: main
+  application.token:
+
+datadump.location:
+  author: 
+  works: 
