@@ -6,8 +6,13 @@
 </head>
 <body>
 
-    <div th:fragment="">
-
+    <div th:fragment="search-panel">
+        <form action="search.html" th:attr="action=@{/search}">
+            <div class="input-group mb-3">
+                <input name="query" type="text" class="form-control" placeholder="Search for a book" aria-label="Search for a book" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+            </div>
+        </form>
     </div>
 
 </body>
