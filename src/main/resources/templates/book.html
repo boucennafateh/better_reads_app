@@ -35,10 +35,10 @@
             <input name="finishedDate" th:value="${userBooks.finishedDate}" type="date" class="form-control" placeholder="Finished date" aria-label="Finished date" aria-describedby="addon-wrapping">
         </div>
         <select name="readingStatus" th:field="${userBooks.readingStatus}" class="form-select" aria-label="Default select example">
-            <option value="0" selected>Reading status</option>
-            <option value="reading">Reading</option>
-            <option value="finished">Finished</option>
-            <option value="dnf">Do not finished</option>
+            <option value="3" selected>Reading status</option>
+            <option value="0-reading">Reading</option>
+            <option value="1-finished">Finished</option>
+            <option value="2-dnf">Do not finished</option>
         </select>
         <select name="rating" th:field="${userBooks.rating}" class="form-select" aria-label="Default select example">
             <option value="0" selected>Rating</option>

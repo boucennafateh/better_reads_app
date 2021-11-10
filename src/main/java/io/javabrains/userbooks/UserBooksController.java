@@ -1,5 +1,9 @@
 package io.javabrains.userbooks;
 
+import io.javabrains.book.Book;
+import io.javabrains.book.BookRepository;
+import io.javabrains.user.BooksByUser;
+import io.javabrains.user.BooksByUserRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -9,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 public class UserBooksController {
 
     private final UserBooksRepository userBooksRepository;
+    private final BookRepository bookRepository;
+    private final BooksByUserRepository booksByUserRepository;
 
-    public UserBooksController(UserBooksRepository userBooksRepository) {
+    public UserBooksController(UserBooksRepository userBooksRepository, BookRepository bookRepository, BooksByUserRepository booksByUserRepository) {
         this.userBooksRepository = userBooksRepository;
+        this.bookRepository = bookRepository;
+        this.booksByUserRepository = booksByUserRepository;
     }
 
     @PostMapping("/addUserBook")
@@ -25,6 +34,12 @@ public class UserBooksController {
 
         if(principal == null || principal.getAttribute("login") == null)
             return null;
+
+        String bookId = formData.getFirst("bookId");
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        if(!bookOptional.isPresent())
+            return new ModelAndView("redirect:/");
+        final Book book = bookOptional.get();
 
         UserBooks userBooks = new UserBooks();
         String[] startedDate = formData.getFirst("startedDate").split("-");
@@ -45,6 +60,19 @@ public class UserBooksController {
 
 
         System.out.println(formData);
+
+        BooksByUser booksByUser = new BooksByUser();
+        booksByUser.setBookId(formData.getFirst("bookId"));
+        booksByUser.setId(principal.getAttribute("login"));
+        booksByUser.setReadingStatus(userBooks.getReadingStatus());
+        booksByUser.setBookName(book.getName());
+        booksByUser.setAuthorNames(book.getAuthorNames());
+        booksByUser.setCoverIds(book.getCoverIds());
+        booksByUser.setRating(userBooks.getRating());
+        booksByUserRepository.save(booksByUser);
+
+
+
 
 
         return new ModelAndView("redirect:/books/"+formData.getFirst("bookId"));
